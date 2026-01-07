@@ -2,30 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { products } from "@/lib/products";
 
-export default function ProductDetailPage({
+export default async function ProductDetailPage({
 	params,
 }: {
-	params: { slug: string };
+	params: Promise<{ slug: string }>;
 }) {
-	const slug = decodeURIComponent(params.slug).trim();
-	const product = products.find((p) => p.slug.trim() === slug);
+	const { slug } = await params;
 
-
+	const product = products.find((p) => p.slug === slug);
 
 	if (!product) {
 		return (
 			<main className="min-h-screen bg-[#080816] text-white flex items-center justify-center">
 				<div className="text-white/80">
-					Product not found.{" "}
+					<div>Product not found.</div>
 
-    {/* DEBUG (temporary) */}
-          <p className="text-xs text-white/70">slug from URL: {params.slug}</p>
-          <p className="text-xs text-white/70">
-            available: {products.map((p) => p.slug).join(", ")}
-          </p>
+					<pre className="mt-3 text-xs text-white/70 whitespace-pre-wrap">
+						{`slug(raw): ${JSON.stringify(slug)}
 
+available: ${products.map((p) => JSON.stringify(p.slug)).join(", ")}`}
+					</pre>
 
-					<Link className="underline" href="/">
+					<Link className="underline" href="/products">
 						Go back
 					</Link>
 				</div>
@@ -36,7 +34,9 @@ export default function ProductDetailPage({
 	return (
 		<main className="min-h-screen bg-[#080816] text-white">
 			<div className="mx-auto max-w-6xl px-6 py-16">
-				<Link href="/products" className="text-sm text-white/60 hover:text-white">
+				<Link
+					href="/products"
+					className="text-sm text-white/60 hover:text-white">
 					← Back to shop
 				</Link>
 
@@ -58,7 +58,6 @@ export default function ProductDetailPage({
 						</p>
 						<h1 className="mt-3 text-4xl font-semibold">{product.name}</h1>
 						<p className="mt-2 text-white/70">{product.price}</p>
-
 						<p className="mt-6 text-white/70">{product.subtitle}</p>
 
 						<div className="mt-8 flex gap-3">
@@ -78,7 +77,7 @@ export default function ProductDetailPage({
 						</div>
 
 						<p className="mt-8 text-xs text-white/50">
-							These statements have not been evaluated by the FDA. products are
+							These statements have not been evaluated by the FDA. Products are
 							not intended to diagnose, treat, cure, or prevent any disease.
 						</p>
 					</div>
