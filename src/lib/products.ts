@@ -2,18 +2,17 @@ export type Product = {
 	slug: string;
 	name: string;
 	price: string;
-	subtitle: string;
+	subtitle?: string;
 	stripeUrl: string;
-	image: string; // path in /public
+	image: string;
 	badge?: string;
 };
 
-
-export const products = [
+export const products: Product[] = [
 	{
 		slug: "colostrum-creamer-packet",
 		name: "Colostrum Creamer Packet",
-		price: "$150.00",
+		price: "$1.50",
 		subtitle: "Single-serve colostrum creamer packet.",
 		image: "/products/colostrum-packet.png",
 		stripeUrl: "https://buy.stripe.com/8x2fZh4sB4aTczucC3e3e01",

@@ -7,13 +7,24 @@ export default function ProductDetailPage({
 }: {
 	params: { slug: string };
 }) {
-	const product = products.find((p) => p.slug === params.slug);
+	const slug = decodeURIComponent(params.slug).trim();
+	const product = products.find((p) => p.slug.trim() === slug);
+
+
 
 	if (!product) {
 		return (
 			<main className="min-h-screen bg-[#080816] text-white flex items-center justify-center">
 				<div className="text-white/80">
 					Product not found.{" "}
+
+    {/* DEBUG (temporary) */}
+          <p className="text-xs text-white/70">slug from URL: {params.slug}</p>
+          <p className="text-xs text-white/70">
+            available: {products.map((p) => p.slug).join(", ")}
+          </p>
+
+
 					<Link className="underline" href="/">
 						Go back
 					</Link>
@@ -25,7 +36,7 @@ export default function ProductDetailPage({
 	return (
 		<main className="min-h-screen bg-[#080816] text-white">
 			<div className="mx-auto max-w-6xl px-6 py-16">
-				<Link href="/" className="text-sm text-white/60 hover:text-white">
+				<Link href="/products" className="text-sm text-white/60 hover:text-white">
 					← Back to shop
 				</Link>
 
