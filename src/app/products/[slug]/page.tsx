@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PRODUCTS } from "@/lib/products";
+import { products } from "@/lib/products";
 
 export default function ProductDetailPage({
 	params,
 }: {
 	params: { slug: string };
 }) {
-	const product = PRODUCTS.find((p) => p.slug === params.slug);
+	const product = products.find((p) => p.slug === params.slug);
 
 	if (!product) {
 		return (
@@ -31,7 +31,7 @@ export default function ProductDetailPage({
 
 				<div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
 					<div className="rounded-2xl bg-white/5 border border-white/10 p-8">
-						<div className="relative aspect-[4/5]">
+						<div className="relative aspect-4/5">
 							<Image
 								src={product.image}
 								alt={product.name}
@@ -67,7 +67,7 @@ export default function ProductDetailPage({
 						</div>
 
 						<p className="mt-8 text-xs text-white/50">
-							These statements have not been evaluated by the FDA. Products are
+							These statements have not been evaluated by the FDA. products are
 							not intended to diagnose, treat, cure, or prevent any disease.
 						</p>
 					</div>
