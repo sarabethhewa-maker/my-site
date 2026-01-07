@@ -6,7 +6,10 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600"] });
 
 export const metadata: Metadata = {
 	title: "SB Shop",
-	description: "Hair + Skin essentials",
+	icons: {
+		icon: "/icon.png",
+		apple: "/apple-icon.png",
+	},
 };
 
 export default function RootLayout({
