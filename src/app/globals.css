@@ -24,3 +24,79 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ===== Seamless marquee (no jump) ===== */
+/* ===== Seamless marquee (RIGHT, infinite, no blank) ===== */
+.ticker {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker__inner {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+
+  /* ✅ move RIGHT forever */
+ animation: marquee-right 180s linear infinite;
+}
+
+/* each track is one full set */
+.ticker__track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+
+  /* ✅ more spacing */
+  gap: 56px;
+  padding: 10px 0;
+
+  /* ✅ crucial: each track should be at least viewport width */
+  min-width: 100vw;
+}
+
+.ticker__item {
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.72);
+}
+
+.ticker__dot {
+  color: rgba(0, 0, 0, 0.28);
+}
+
+/*
+  ✅ KEY: we start at -50% and move to 0
+  because we have TWO tracks (A + B).
+  At -50%, B is perfectly filling the viewport.
+  As it moves to 0, A takes over — seamless.
+*/
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* Pause on hover */
+.ticker:hover .ticker__inner {
+  animation-play-state: paused;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ticker__inner {
+    animation: none;
+    transform: translateX(0);
+  }
+}
+
+html,
+body {
+  height: 100%;
+  background: #a9a0a0 !important;
+}
